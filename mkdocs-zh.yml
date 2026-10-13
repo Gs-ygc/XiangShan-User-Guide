@@ -3,7 +3,7 @@ INHERIT: utils/mkdocs-base.yml
 docs_dir: 'docs/zh'
 site_dir: 'site/zh'
 
-site_name: 香山开源处理器用户手册
+site_name: 香炉峰用户手册
 repo_url: https://github.com/OpenXiangShan/XiangShan-User-Guide
 repo_name: XiangShan-User-Guide
 
@@ -20,24 +20,51 @@ extra:
     - name: 中文
       link: https://docs.xiangshan.cc/projects/user-guide/zh-cn/latest/
       lang: zh
-    - name: English
-      link: https://docs.xiangshan.cc/projects/user-guide/en/latest/
-      lang: en
 
 nav:
   - 前言: index.md
-  - 概述: introduction.md
-  - 微架构简介: processor.md
-  - 典型配置: typical-configuration.md
-  - 指令集: instruction-set.md
-  - 数据寄存器: registers.md
-  - 特权模式与控制状态寄存器: mode-and-csr.md
-  - 异常与中断: exception-and-interrupt.md
-  - 内存模型: memory-model.md
-  - 内存子系统: memory-subsystem.md
-  - 向量: vector.md
-  - 中断控制器: interruption-controller.md
-  - 总线接口: bus-interface.md
-  - 调试: debug.md
-  - 性能监测单元: performance-monitor.md
-  - 严重错误: critical-error.md
+  - 概述: xsai-introduction.md
+  - 微架构增量: xsai-microarchitecture.md
+  - 指令集扩展: xsai-instruction-set.md
+  - 数据寄存器: xsai-registers.md
+  - 特权模式与控制状态寄存器: xsai-csr.md
+  - 异常与中断: xsai-exception.md
+  - 内存子系统与 HBL2: xsai-memory.md
+  - 性能监测: xsai-pmu.md
+  - 调试支持: xsai-debug.md
+  - 仿真与调试:
+      - 环境准备: sim-environment.md
+      - Verilator 仿真: sim-verilator.md
+      - VCS 仿真与用例框架: sim-vcs.md
+      - 加速仿真（Palladium）: sim-acceleration.md
+      - FPGA 上板与云平台: sim-fpga.md
+      - 差分验证: debug-difftest.md
+      - Checkpoint 与切片: debug-checkpoint.md
+      - 常见故障排查: debug-troubleshooting.md
+  - 软件开发:
+      - 编译器与算子 DSL: sw-compiler.md
+      - 功能模拟器: sw-simulators.md
+      - 系统软件与运行时: sw-system.md
+      - 算子库与推理框架: sw-frameworks.md
+      - 性能分析与调优: sw-perf.md
+  - 常见问题与已知限制: faq.md
+  - 附录:
+      - A 相对昆明湖 V2R2A 的差异清单: appendix-diff.md
+      - B 术语表: appendix-glossary.md
+      - C 参考文档与仓库: appendix-references.md
+  - 基准手册（昆明湖 V2，未修改）:
+      - 概述: introduction.md
+      - 微架构简介: processor.md
+      - 典型配置: typical-configuration.md
+      - 指令集: instruction-set.md
+      - 数据寄存器: registers.md
+      - 特权模式与控制状态寄存器: mode-and-csr.md
+      - 异常与中断: exception-and-interrupt.md
+      - 内存模型: memory-model.md
+      - 内存子系统: memory-subsystem.md
+      - 向量: vector.md
+      - 中断控制器: interruption-controller.md
+      - 总线接口: bus-interface.md
+      - 调试: debug.md
+      - 性能监测单元: performance-monitor.md
+      - 严重错误: critical-error.md
