@@ -3,7 +3,7 @@ INHERIT: utils/mkdocs-base.yml
 docs_dir: 'docs/en'
 site_dir: 'site/en'
 
-site_name: XiangShan User Guide
+site_name: Xianglufeng User Guide
 repo_url: https://github.com/OpenXiangShan/XiangShan-User-Guide
 repo_name: XiangShan-User-Guide
 
@@ -29,17 +29,47 @@ extra:
   
 nav:
   - Preface: index.md
-  - Introduction: introduction.md
-  - Microarchitecture: processor.md
-  - Typical Configurations: typical-configuration.md
-  - Instruction Set: instruction-set.md
-  - Data Registers: registers.md
-  - Privileged Modes and Control Status Registers: mode-and-csr.md
-  - Exceptions and Interrupts: exception-and-interrupt.md
-  - Memory Model: memory-model.md
-  - Memory Subsystem: memory-subsystem.md
-  - Vector: vector.md
-  - Interrupt Controller: interruption-controller.md
-  - Bus Interface: bus-interface.md
-  - Debug Module: debug.md
-  - Performance Monitor: performance-monitor.md
+  - Introduction: xsai-introduction.md
+  - Microarchitecture Delta: xsai-microarchitecture.md
+  - Instruction Set Extensions: xsai-instruction-set.md
+  - Registers: xsai-registers.md
+  - Modes and CSRs: xsai-csr.md
+  - Exceptions and Interrupts: xsai-exception.md
+  - Memory Subsystem and HBL2: xsai-memory.md
+  - Performance Monitor: xsai-pmu.md
+  - Debug Support: xsai-debug.md
+  - Simulation and Debug:
+      - Environment Setup: sim-environment.md
+      - Verilator Simulation: sim-verilator.md
+      - VCS Simulation and Testbench: sim-vcs.md
+      - Accelerated Simulation (Palladium): sim-acceleration.md
+      - FPGA and Cloud Platform: sim-fpga.md
+      - Differential Testing: debug-difftest.md
+      - Checkpoint and Slicing: debug-checkpoint.md
+      - Troubleshooting: debug-troubleshooting.md
+  - Software Development:
+      - Compiler and Operator DSL: sw-compiler.md
+      - Functional Simulators: sw-simulators.md
+      - System Software and Runtime: sw-system.md
+      - Kernel Libraries and Inference Frameworks: sw-frameworks.md
+      - Performance Analysis and Tuning: sw-perf.md
+  - FAQ and Known Limitations: faq.md
+  - Appendix:
+      - A Delta over Kunminghu V2R2: appendix-diff.md
+      - B Glossary: appendix-glossary.md
+      - C References and Repositories: appendix-references.md
+  - Baseline Manual (Kunminghu V2R2, unmodified):
+      - Introduction: introduction.md
+      - Microarchitecture: processor.md
+      - Typical Configurations: typical-configuration.md
+      - Instruction Set: instruction-set.md
+      - Data Registers: registers.md
+      - Privileged Modes and Control Status Registers: mode-and-csr.md
+      - Exceptions and Interrupts: exception-and-interrupt.md
+      - Memory Model: memory-model.md
+      - Memory Subsystem: memory-subsystem.md
+      - Vector: vector.md
+      - Interrupt Controller: interruption-controller.md
+      - Bus Interface: bus-interface.md
+      - Debug Module: debug.md
+      - Performance Monitor: performance-monitor.md
