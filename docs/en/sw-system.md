@@ -1,27 +1,25 @@
 # System Software and Runtime {#sec:sw-system}
 
-## Firmware and device tree
+## Device tree and capability discovery
 
-* Firmware performs matrix extension initialisation and CSR support;
-* The device tree describes matrix capabilities (`riscv,matrix-isa-caps`) and
-  related hardware resources;
-* **Watch `timebase-frequency`**: RTC dividers differ between simulation and
-  FPGA, so a DTB must not be reused across simulators and RTL without checking
-  (see [Troubleshooting](debug-troubleshooting.md#sec:debug-troubleshooting)).
+* Matrix capabilities are described by device-tree nodes (`riscv,matrix-isa-caps` and similar), replacing the earlier approach of describing capabilities with a bitmap (`xmisa`);
+* Firmware is responsible for filling in the capability description, and the operating system and runtime decide from it whether to enable the matrix path;
+* The reported capabilities must match the actual RTL configuration, otherwise software generates kernels against the wrong tile shape.
 
-TODO: firmware changes and device-tree example.
+TODO: complete list of device-tree nodes and properties.
 
-## Linux and rootfs
+## Operating system support
 
-* Inference frameworks run on riscv64 Linux;
-* rootfs/initramfs build flow; models can be packed into `gcpt.bin`.
+TODO: kernel version, patch set, and how matrix registers are handled across context switches.
 
-TODO: build steps and size constraints.
+## Runtime and memory
 
-## Runtime constraints
+* Matrix operands must reside in a physically contiguous memory pool (`/dev/mem` @ `0x100000000`);
+* The allocation mode (pool mode / anonymous mode) must be decided by the external environment and must not be compiled into the artifact:
+  * anonymous mode is only for QEMU user mode;
+  * if it is carried onto the board unconditionally, the result is `SIGABRT` (`rc=134`), or a wrong result under the anonymous pool that is intercepted by the guard (`rc=255`).
+* AMU row addressing is computed as `PA_base + row × stride` and the TLB is not re-checked per row, so a non-contiguous buffer is read incorrectly and silently when the row count is large.
 
-* Alignment and stride requirements for matrix accesses;
-* Tile shape and data layout constraints;
-* Quantization formats and scaling-factor conventions.
+## Boot flow
 
-TODO: constraint list and common mistakes.
+TODO: flow and limitations of checkpoint-restore boot (GCPT), see [Checkpoint and Slicing](debug-checkpoint.md#sec:debug-checkpoint).

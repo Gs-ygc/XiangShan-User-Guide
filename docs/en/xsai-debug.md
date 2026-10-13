@@ -1,28 +1,37 @@
 # Debug Support {#sec:xsai-debug}
 
-## Differential testing support
+## Differential verification support
 
-* Matrix instruction diff comparison, including matrix register hash comparison;
-* Both CPU and GPU reference models are supported.
+* Differential comparison of matrix instructions, including matrix register hash
+  comparison;
+* Both paths are supported: the CPU reference model and the GPU reference model.
 
 See [Differential Testing](debug-difftest.md#sec:debug-difftest).
 
 ## Checkpoint and sampling
 
 * `CHECKPOINT_HERE` semantic sampling points;
-* QEMU checkpoint and RTL restore flow.
+* The QEMU checkpoint and RTL restore flow.
 
 See [Checkpoint and Slicing](debug-checkpoint.md#sec:debug-checkpoint).
 
 ## Debug interfaces
 
-TODO: differences from the baseline debug interfaces (breakpoints, single step,
-consistency with asynchronous matrix state).
+TODO: add the differences from the baseline debug interfaces (breakpoints, single
+step, consistency with the asynchronous matrix state).
 
 ## Known issues
 
-* A vector instruction hangs in a specific scenario under the minimal
-  configuration (not reproducible in the full configuration); attribution and
+* Under a cut-down configuration a vector instruction hangs in a specific
+  scenario (not reproducible in the full configuration); attribution and
   upstream reporting are pending.
 
-TODO: conclusion.
+TODO: add the conclusion.
+
+## Troubleshooting entry points
+
+* For high-frequency failures in build, run, cloud platform and software
+  adaptation see [Troubleshooting](debug-troubleshooting.md#sec:debug-troubleshooting);
+* When results disagree, first rule out undefined behaviour (reading an unwritten
+  matrix register region, missing synchronization, out-of-bounds reads and
+  writes), then narrow down to the specific instruction and moment.

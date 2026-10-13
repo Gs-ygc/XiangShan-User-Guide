@@ -14,3 +14,14 @@ TODO：补充 RTL、编译器、模拟器、软件栈、算子库与文档仓库
 * `xsai-env` 环境说明与工作流文档（`docs/`、`AGENTS.md`）
 * 环境自检：`make test-smoke` / `make test`
 * 问题上报：`scripts/bug-report.sh`、`scripts/create-issue.sh`
+
+## 构建产物与负载
+
+| 路径 | 内容 |
+| --- | --- |
+| `XSAI/build/emu` | Verilator 仿真器 |
+| `XSAI/build/rtl/SimTop.sv` | 仿真专用 RTL 顶层 |
+| `XSAI/build/rtl/XSTop.sv` | 综合 / FPGA 风格 RTL 顶层 |
+| `XSAI/ready-to-run/*.bin` | 预置裸机镜像 |
+| `firmware/gcpt_restore/build-*/build/gcpt.bin` | checkpoint 恢复启动镜像 |
+| `firmware/checkpoints/**/*.zstd` | checkpoint 分片 |

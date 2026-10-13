@@ -23,8 +23,8 @@ Processor User Guide_.
 | Dimension | What is added | See |
 | --- | --- | --- |
 | ISA | ZAMES / ZMASYNC, matrix load/store and transpose, low-precision convert instructions | [Instruction Set Extensions](xsai-instruction-set.md#sec:xsai-instruction-set) |
-| Registers | Matrix, configuration and synchronization registers | [Registers](xsai-registers.md#sec:xsai-registers) |
-| CSRs | Matrix extension state and precision capability description | [Modes and CSRs](xsai-csr.md#sec:xsai-csr) |
+| Registers | Matrix, configuration and synchronization registers | [Data Registers](xsai-registers.md#sec:xsai-registers) |
+| CSRs | Matrix extension state and precision capability description | [Privileged Modes and Control and Status Registers](xsai-csr.md#sec:xsai-csr) |
 | Exceptions | Illegal-instruction, alignment and UB conventions for the new instructions | [Exceptions and Interrupts](xsai-exception.md#sec:xsai-exception) |
 | Memory | HBL2, matrix access path, RAW bypass and miss handling | [Memory Subsystem and HBL2](xsai-memory.md#sec:xsai-memory) |
 | PMU | AI-related HPM events, structured tracing | [Performance Monitor](xsai-pmu.md#sec:xsai-pmu) |

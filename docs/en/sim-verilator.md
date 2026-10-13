@@ -20,19 +20,25 @@ make xsai
 The top-level wrapper expands to:
 
 ```plain
-$(MAKE) -C XSAI emu -j8 \
-  CONFIG=DefaultMatrixConfig \
-  WITH_DRAMSIM3=1 WITH_CHISELDB=1 WITH_CONSTANTIN=0 \
-  EMU_THREADS=8 EMU_TRACE=fst ...
+$(MAKE) -C XSAI emu -j<host cpus> \
+  CONFIG=DefaultMatrixConfig LLC=ZhuJiang \
+  WITH_DRAMSIM3=0 WITH_CHISELDB=1 WITH_CONSTANTIN=0 \
+  EMU_THREADS=8 EMU_TRACE=fst OPT_FAST=-O3 ...
 ```
 
-| Variable | Meaning |
-| --- | --- |
-| `CONFIG=DefaultMatrixConfig` | Default matrix configuration (not minimal) |
-| `WITH_DRAMSIM3=1` | Enable DRAMsim3 memory model (`DRAMSIM3_HOME` required) |
-| `WITH_CHISELDB=1` | Enable ChiselDB support at compile time |
-| `EMU_THREADS=8` | Number of Verilator threads |
-| `EMU_TRACE=fst` | **Compile-time** FST support; required for runtime wave dumping |
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `XSAI_SIM_CONFIG` | `DefaultMatrixConfig` | Matrix configuration (not the minimal one) |
+| `XSAI_SIM_LLC` | `ZhuJiang` | Last-level cache configuration |
+| `XSAI_SIM_WITH_DRAMSIM3` | `0` | DRAMsim3 memory model off by default; enabling it also requires `DRAMSIM3_HOME` |
+| `XSAI_SIM_WITH_CHISELDB` | `1` | Enable ChiselDB support at compile time |
+| `XSAI_SIM_BUILD_JOBS` | host CPU count | Build parallelism |
+| `EMU_THREADS` | `8` | Number of Verilator threads |
+| `EMU_TRACE` | `fst` | **Compile-time** FST support; required for runtime wave dumping |
+| `XSAI_SIM_RTC_CLOCK_DIV` | `100` | RTC divider; affects guest time and simulation duration (see [Troubleshooting](debug-troubleshooting.md#sec:debug-troubleshooting)) |
+
+All of them can be overridden on the command line, for example
+`make xsai XSAI_SIM_BUILD_DIR=build-fast`.
 
 Relations between the three lower-level targets:
 
@@ -49,14 +55,14 @@ synthesis RTL.
 
 | Entry | Behaviour |
 | --- | --- |
-| `make run-emu` | Ensures `build/emu`; `DIFF=1` by default; no timestamped log by default |
+| `make run-emu` | Ensures `build/emu`; `DIFF` defaults to `1` (difftest on) and `LOG` to `0` (no timestamped log) |
 | `make run-emu-debug` | Forces `--log` and `--db`; accepts `WARMUP`, `MAX_INSTR`, `WAVE_BEGIN/END`, `FORK` |
 
-Script-layer defaults:
+Script-layer defaults (`scripts/run-emu.sh`):
 
-* emulator at `XSAI/build/emu`;
+* emulator at `XSAI/build/emu` (change `XSAI_SIM_BUILD_DIR` to relocate);
 * reference model at `XSAI/ready-to-run/riscv64-nemu-interpreter-so` (override with `--diff-so`);
-* process stack raised to 64 MiB;
+* process stack raised to 64 MiB (`EMU_STACK_KB=65536`);
 * payload is mandatory.
 
 ## Three kinds of payload

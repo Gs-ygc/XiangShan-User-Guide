@@ -12,7 +12,7 @@
 * `CHECKPOINT_HERE` 语义化采样点；
 * QEMU checkpoint 与 RTL restore 流程。
 
-详见[Checkpoint 与切片](debug-checkpoint.md#sec:debug-checkpoint)。
+详见 [Checkpoint 与切片](debug-checkpoint.md#sec:debug-checkpoint)。
 
 ## 调试接口
 
@@ -23,3 +23,8 @@ TODO：补充与基线调试接口的差异（断点、单步、与矩阵异步�
 * 裁剪配置下向量指令在特定场景卡死（完整配置不复现），待定位归属并上报。
 
 TODO：补充结论。
+
+## 排障入口
+
+* 构建、运行、云平台与软件适配的高频故障见[常见故障排查](debug-troubleshooting.md#sec:debug-troubleshooting)；
+* 结果不一致时先排除未定义行为（读取未写入的矩阵寄存器区域、缺少同步、越界读写），再收敛到具体指令与时刻。

@@ -1,24 +1,25 @@
 # 系统软件与运行时 {#sec:sw-system}
 
-## 固件与设备树
+## 设备树与能力发现
 
-* 固件负责矩阵扩展初始化与相关 CSR 支持；
-* 设备树描述矩阵能力（`riscv,matrix-isa-caps`）与相关硬件资源；
-* **注意 `timebase-frequency`**：仿真与 FPGA 的 RTC 分频不同，DTB 不可在模拟器与 RTL 之间直接混用（见[常见故障排查](debug-troubleshooting.md#sec:debug-troubleshooting)）。
+* 矩阵能力通过设备树节点描述（`riscv,matrix-isa-caps` 等），取代早期以位图（`xmisa`）描述能力的方式；
+* 固件负责填充能力描述，操作系统与运行时据此决定是否启用矩阵路径；
+* 上报的能力必须与 RTL 实际配置一致，否则软件会按错误的 tile 规格生成核。
 
-TODO：补充固件修改点与设备树示例。
+TODO：补充设备树节点与属性的完整列表。
 
-## Linux 与 rootfs
+## 操作系统支持
 
-* 支持在 riscv64 Linux 上运行推理框架；
-* rootfs/initramfs 构建流程；模型可打包进 `gcpt.bin`。
+TODO：补充内核版本、补丁集，以及矩阵寄存器在上下文切换中的处理方式。
 
-TODO：补充构建步骤与体积约束。
+## 运行时与内存
 
-## 运行时约束
+* 矩阵操作数必须位于物理连续内存池（`/dev/mem` @ `0x100000000`）；
+* 分配模式（池模式 / 匿名模式）必须由外部环境决定，不能编进产物：
+  * 匿名模式只用于 QEMU 用户态；
+  * 若被无条件带入板上，表现为 `SIGABRT`（`rc=134`），或匿名池下算错被门禁拦截（`rc=255`）。
+* AMU 行寻址按 `PA_base + row × stride` 计算且不逐行重查 TLB，非连续缓冲在行数较大时会静默读错。
 
-* 矩阵访存的对齐与 stride 要求；
-* tile 形状与数据布局约束；
-* 量化格式与缩放因子约定。
+## 启动流程
 
-TODO：补充约束清单与常见错误。
+TODO：补充 checkpoint 恢复启动（GCPT）的流程与限制，见 [Checkpoint 与切片](debug-checkpoint.md#sec:debug-checkpoint)。

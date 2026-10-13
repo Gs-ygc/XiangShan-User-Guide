@@ -1,24 +1,36 @@
 # Performance Monitor {#sec:xsai-pmu}
 
-This chapter covers the performance monitoring additions of Xianglufeng; the
-baseline HPM is described in the _XiangShan User Guide_.
+This chapter documents the performance monitoring capabilities added by
+Xianglufeng; for the baseline HPM see the _XiangShan Open-Source Processor User
+Guide_ (Performance Monitoring Unit chapter).
 
 ## HPM events
 
-TODO: matrix/memory/AI related event numbers and meanings.
+TODO: list the numbers and meanings of the matrix / memory-access / AI related
+events.
 
 ## Structured tracing
 
-* Key units can record structured events for offline analysis;
-* Relation to waveforms and HPM.
+* Key units support structured event recording for offline analysis;
+* The relation to waveforms and HPM.
 
-TODO: usage and field description.
+TODO: add the usage and the field descriptions.
 
 ## Recommended analysis flow
 
-1. Operator-level performance table (cycles, IPC, effective bandwidth,
-   arithmetic intensity, peak utilisation);
-2. HPM to classify the bottleneck (memory / compute / scheduling);
-3. Structured tracing to localise the module and the moment.
+1. Kernel-level performance table (cycles, IPC, effective bandwidth, arithmetic
+   intensity, fraction of peak);
+2. HPM to classify the bottleneck type (memory access / compute / scheduling);
+3. Structured tracing to localise the specific module and moment.
 
-TODO: worked example.
+## Reporting conventions
+
+Performance numbers in a report must state whether they are per call, Per-MAC or
+whole-network, otherwise the numbers are not comparable. Distinguishing "the
+error introduced by the matrix unit" from "the error of quantisation /
+truncation itself" is equally important: the criterion for verifying that the
+adaptation is correct is bit-level identical output with the matrix switch on and
+off, not the accuracy difference against a particular version of the quantised
+model.
+
+TODO: add examples.

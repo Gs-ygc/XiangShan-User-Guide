@@ -18,19 +18,24 @@ make xsai
 顶层封装展开后等价于：
 
 ```plain
-$(MAKE) -C XSAI emu -j8 \
-  CONFIG=DefaultMatrixConfig \
-  WITH_DRAMSIM3=1 WITH_CHISELDB=1 WITH_CONSTANTIN=0 \
-  EMU_THREADS=8 EMU_TRACE=fst ...
+$(MAKE) -C XSAI emu -j<主机核数> \
+  CONFIG=DefaultMatrixConfig LLC=ZhuJiang \
+  WITH_DRAMSIM3=0 WITH_CHISELDB=1 WITH_CONSTANTIN=0 \
+  EMU_THREADS=8 EMU_TRACE=fst OPT_FAST=-O3 ...
 ```
 
-| 参数 | 含义 |
-| --- | --- |
-| `CONFIG=DefaultMatrixConfig` | 使用默认矩阵扩展配置（非最小配置） |
-| `WITH_DRAMSIM3=1` | 启用 DRAMsim3 内存模型，需要 `DRAMSIM3_HOME` |
-| `WITH_CHISELDB=1` | 编译时启用 ChiselDB 支撑代码 |
-| `EMU_THREADS=8` | Verilator 仿真线程数 |
-| `EMU_TRACE=fst` | **编译期**打开 FST 波形支持，运行期导波的前提 |
+| 参数 | 默认值 | 含义 |
+| --- | --- | --- |
+| `XSAI_SIM_CONFIG` | `DefaultMatrixConfig` | 矩阵扩展配置（非最小配置） |
+| `XSAI_SIM_LLC` | `ZhuJiang` | 末级缓存配置 |
+| `XSAI_SIM_WITH_DRAMSIM3` | `0` | DRAMsim3 内存模型默认关闭；启用需同时提供 `DRAMSIM3_HOME` |
+| `XSAI_SIM_WITH_CHISELDB` | `1` | 编译时启用 ChiselDB 支撑代码 |
+| `XSAI_SIM_BUILD_JOBS` | 主机核数 | 构建并行度 |
+| `EMU_THREADS` | `8` | Verilator 仿真线程数 |
+| `EMU_TRACE` | `fst` | **编译期**打开 FST 波形支持，运行期导波的前提 |
+| `XSAI_SIM_RTC_CLOCK_DIV` | `100` | RTC 分频，影响 guest 时间与仿真时长（见[常见故障排查](debug-troubleshooting.md#sec:debug-troubleshooting)） |
+
+以上均可在命令行覆盖，例如 `make xsai XSAI_SIM_BUILD_DIR=build-fast`。
 
 底层三个构建目标的关系：
 
@@ -46,14 +51,14 @@ $(MAKE) -C XSAI emu -j8 \
 
 | 入口 | 行为 |
 | --- | --- |
-| `make run-emu` | 自动确保 `build/emu` 存在；默认 `DIFF=1` 开差分；默认不写时间戳日志 |
+| `make run-emu` | 自动确保 `build/emu` 存在；`DIFF` 默认 `1`（开差分）、`LOG` 默认 `0`（不写时间戳日志） |
 | `make run-emu-debug` | 强制 `--log` 与 `--db`，可附加 `WARMUP`、`MAX_INSTR`、`WAVE_BEGIN/END`、`FORK` |
 
-脚本层默认：
+脚本层默认（`scripts/run-emu.sh`）：
 
-* 仿真器路径 `XSAI/build/emu`；
+* 仿真器路径 `XSAI/build/emu`（`XSAI_SIM_BUILD_DIR` 可改）；
 * 默认参考模型 `XSAI/ready-to-run/riscv64-nemu-interpreter-so`（可用 `--diff-so` 覆盖）；
-* 仿真进程栈尝试设为 64 MiB；
+* 仿真进程栈尝试设为 64 MiB（`EMU_STACK_KB=65536`）；
 * payload 为必填项。
 
 ## 三类 payload

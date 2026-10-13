@@ -32,8 +32,8 @@ nav:
   - Introduction: xsai-introduction.md
   - Microarchitecture Delta: xsai-microarchitecture.md
   - Instruction Set Extensions: xsai-instruction-set.md
-  - Registers: xsai-registers.md
-  - Modes and CSRs: xsai-csr.md
+  - Data Registers: xsai-registers.md
+  - Privileged Modes and Control and Status Registers: xsai-csr.md
   - Exceptions and Interrupts: xsai-exception.md
   - Memory Subsystem and HBL2: xsai-memory.md
   - Performance Monitor: xsai-pmu.md
